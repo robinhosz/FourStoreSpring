@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.foursys.fourcamp.store.model.enums.TransactionStatus;
+
 @Entity
 @Table(name = "tb_transaction")
 public class Transaction implements Serializable {
@@ -27,6 +29,8 @@ public class Transaction implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'z'", timezone = "GMT")
 	private Instant moment;
 
+	private Integer transactionStatus;
+
 	@ManyToOne
 	@JoinColumn(name = "costumer_id")
 	private Costumer client;
@@ -35,10 +39,11 @@ public class Transaction implements Serializable {
 
 	}
 
-	public Transaction(Long id, Instant moment, Costumer client) {
+	public Transaction(Long id, Instant moment, TransactionStatus transactionStatus, Costumer client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setTransactionStatus(transactionStatus);
 		this.client = client;
 	}
 
@@ -56,6 +61,17 @@ public class Transaction implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+
+	public TransactionStatus getTransactionStatus() {
+		return TransactionStatus.valueOf(transactionStatus);
+	}
+
+	public void setTransactionStatus(TransactionStatus transactionStatus) {
+		if (transactionStatus != null) {
+			this.transactionStatus = transactionStatus.getKey();
+		}
+
 	}
 
 	public Costumer getClient() {

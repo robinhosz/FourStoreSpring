@@ -43,7 +43,6 @@ public class Transaction implements Serializable {
 	@OneToMany(mappedBy = "id.transaction")
 	private Set<TransactionCart> cart = new HashSet<>();
 
-	
 	@OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
 	private Payment payment;
 
@@ -104,6 +103,15 @@ public class Transaction implements Serializable {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public Double getTotal() {
+		double sum = 0.0;
+		for (TransactionCart tc : cart) {
+			sum += tc.getSubTotal();
+		}
+
+		return sum;
 	}
 
 	@Override

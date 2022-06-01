@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -37,9 +39,13 @@ public class Transaction implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "costumer_id")
 	private Costumer client;
-	
+
 	@OneToMany(mappedBy = "id.transaction")
 	private Set<TransactionCart> cart = new HashSet<>();
+
+	
+	@OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
+	private Payment payment;
 
 	public Transaction() {
 
@@ -91,7 +97,15 @@ public class Transaction implements Serializable {
 	public Set<TransactionCart> getCart() {
 		return cart;
 	}
-	
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

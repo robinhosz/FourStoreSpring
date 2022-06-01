@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.foursys.fourcamp.store.model.Costumer;
 import br.com.foursys.fourcamp.store.model.Group;
+import br.com.foursys.fourcamp.store.model.Payment;
 import br.com.foursys.fourcamp.store.model.Product;
 import br.com.foursys.fourcamp.store.model.Transaction;
 import br.com.foursys.fourcamp.store.model.TransactionCart;
@@ -81,7 +82,12 @@ public class TestConfig implements CommandLineRunner{
 		TransactionCart tc4 = new TransactionCart(o3, p5, 2, p5.getPrice()); 
 	
 		transactionCartRepository.saveAll(Arrays.asList(tc1,tc2,tc3,tc4));
-	
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T22:53:07Z"), o1);
+		o1.setPayment(pay1);
+		
+		transactionRepository.save(o1);
+		
 	}
 	
 	

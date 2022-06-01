@@ -12,10 +12,12 @@ import br.com.foursys.fourcamp.store.model.Costumer;
 import br.com.foursys.fourcamp.store.model.Group;
 import br.com.foursys.fourcamp.store.model.Product;
 import br.com.foursys.fourcamp.store.model.Transaction;
+import br.com.foursys.fourcamp.store.model.TransactionCart;
 import br.com.foursys.fourcamp.store.model.enums.TransactionStatus;
 import br.com.foursys.fourcamp.store.repository.CostumerRepository;
 import br.com.foursys.fourcamp.store.repository.GroupRepository;
 import br.com.foursys.fourcamp.store.repository.ProductRepository;
+import br.com.foursys.fourcamp.store.repository.TransactionCartRepository;
 import br.com.foursys.fourcamp.store.repository.TransactionRepository;
 
 @Configuration
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private TransactionCartRepository transactionCartRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -70,6 +75,13 @@ public class TestConfig implements CommandLineRunner{
 		costumerRepository.saveAll(Arrays.asList(c1, c2));
 		transactionRepository.saveAll(Arrays.asList(o1, o2, o3));
 		
+		TransactionCart tc1 = new TransactionCart(o1, p1, 2, p1.getPrice()); 
+		TransactionCart tc2 = new TransactionCart(o1, p3, 1, p3.getPrice()); 
+		TransactionCart tc3 = new TransactionCart(o2, p3, 2, p3.getPrice()); 
+		TransactionCart tc4 = new TransactionCart(o3, p5, 2, p5.getPrice()); 
+	
+		transactionCartRepository.saveAll(Arrays.asList(tc1,tc2,tc3,tc4));
+	
 	}
 	
 	

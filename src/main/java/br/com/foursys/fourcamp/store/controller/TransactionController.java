@@ -17,17 +17,18 @@ import br.com.foursys.fourcamp.store.service.TransactionService;
 public class TransactionController {
 
 	@Autowired
-	private TransactionService costumerService;
+	private TransactionService transactionService;
 
 	@GetMapping
 	public ResponseEntity<List<Transaction>> findAll() {
-		List<Transaction> list = costumerService.findAll();
+		List<Transaction> list = transactionService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping(value = "/{id}") 
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Transaction> findById(@PathVariable Long id) {
-		Transaction obj = costumerService.findById(id);
+		Transaction obj = transactionService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+
 }
